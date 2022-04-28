@@ -21,8 +21,8 @@
 
 #include <spdlog/spdlog.h>
 
-#include "tensorinfo.hpp"
 #include "logging.hpp"
+#include "tensorinfo.hpp"
 
 namespace ovms {
 
@@ -95,20 +95,18 @@ Status validatePluginConfiguration(const plugin_config_t& pluginConfig, const st
             SPDLOG_LOGGER_DEBUG(modelmanager_logger, "Exception thrown from IE when requesting plugin: {}; key: {}; value.", plugin, supportedConfigKey);
         }
 
-        if(targetDevice.find(plugin) != std::string::npos || targetDevice == "AUTO"){
+        if (targetDevice.find(plugin) != std::string::npos || targetDevice == "AUTO") {
             allSupportedConfigKeys.insert(allSupportedConfigKeys.end(), pluginSupportedConfigKeys.begin(), pluginSupportedConfigKeys.end());
         }
     }
 
     for (auto& config : pluginConfig) {
-        if (std::find(allSupportedConfigKeys.begin(), allSupportedConfigKeys.end(), config.first) == allSupportedConfigKeys.end())
-        {
+        if (std::find(allSupportedConfigKeys.begin(), allSupportedConfigKeys.end(), config.first) == allSupportedConfigKeys.end()) {
             std::ostringstream allSupportedConfigKeysStr;
-            if (!allSupportedConfigKeys.empty())
-            {
-                std::copy(allSupportedConfigKeys.begin(), allSupportedConfigKeys.end()-1,
+            if (!allSupportedConfigKeys.empty()) {
+                std::copy(allSupportedConfigKeys.begin(), allSupportedConfigKeys.end() - 1,
                     std::ostream_iterator<std::string>(allSupportedConfigKeysStr, ","));
-            
+
                 allSupportedConfigKeysStr << allSupportedConfigKeys.back();
             }
 
